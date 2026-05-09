@@ -684,3 +684,301 @@ h4 {
     grid-template-columns: 1fr;
   }
 }
+/* ========================================
+   COMPLETE DARK MODE
+======================================== */
+
+body.dark-mode {
+  background-color: #121212;
+  color: #f5f5f5;
+}
+
+/* ========================================
+   NAVBAR
+======================================== */
+
+body.dark-mode .navbar {
+  background: transparent;
+}
+
+body.dark-mode .navbar.scrolled {
+  background: rgba(20, 20, 20, 0.92);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .logo,
+body.dark-mode .logo-text,
+body.dark-mode .nav-links a,
+body.dark-mode .theme-toggle,
+body.dark-mode .scroll-top {
+  color: #f5f5f5;
+}
+
+body.dark-mode .nav-links a:hover {
+  color: var(--primary-orange);
+}
+
+body.dark-mode .logo-circle {
+  background: #ffffff;
+  color: #121212;
+}
+
+/* ========================================
+   HERO SECTION
+======================================== */
+
+body.dark-mode .hero {
+  background-color: #121212;
+}
+
+body.dark-mode .hero-name {
+  color: #ffffff;
+}
+
+body.dark-mode .hero-intro p {
+  color: #b0b0b0;
+}
+
+body.dark-mode .line {
+  background-color: #f5f5f5;
+}
+
+body.dark-mode .highlight {
+  background: rgba(255, 77, 0, 0.2);
+  border-bottom: 3px solid var(--primary-orange);
+}
+
+body.dark-mode .highlight-alt {
+  border-bottom: 3px solid var(--primary-orange);
+}
+
+body.dark-mode .social-btn {
+  background-color: #2a2a2a;
+  color: #f5f5f5;
+  border: 1px solid #333;
+}
+
+body.dark-mode .social-btn:hover {
+  background-color: var(--primary-orange);
+  color: #ffffff;
+}
+
+body.dark-mode .explore-more a {
+  color: #b0b0b0;
+}
+
+body.dark-mode .explore-icon {
+  border: 1px solid #444;
+  color: #f5f5f5;
+}
+
+body.dark-mode .explore-more:hover .explore-icon {
+  background-color: var(--primary-orange);
+  border-color: var(--primary-orange);
+  color: #ffffff;
+}
+
+/* Hero Image */
+body.dark-mode .image-card {
+  background-color: #1e1e1e;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .dashed-box {
+  border: 1px dashed #555;
+}
+
+/* ========================================
+   TEXT
+======================================== */
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode .section-title {
+  color: #ffffff;
+}
+
+body.dark-mode p,
+body.dark-mode .project-info p,
+body.dark-mode .contact-intro,
+body.dark-mode .footer-links a,
+body.dark-mode .project-skills {
+  color: #b0b0b0;
+}
+
+/* ========================================
+   ABOUT SECTION
+======================================== */
+
+body.dark-mode .about {
+  background-color: #1a1a1a;
+}
+
+body.dark-mode .about-image img {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* ========================================
+   SKILLS SECTION
+======================================== */
+
+body.dark-mode .skills {
+  background-color: #121212;
+}
+
+body.dark-mode .skill-card {
+  background-color: #1e1e1e;
+  border: 1px solid #333;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-mode .skill-card:hover {
+  background-color: #252525;
+  transform: translate(-5px, -5px);
+  box-shadow: 8px 8px 0px var(--primary-orange);
+}
+
+body.dark-mode .skill-icon {
+  background-color: #2a2a2a;
+  color: var(--primary-orange);
+}
+
+/* ========================================
+   PROJECTS SECTION
+======================================== */
+
+body.dark-mode .projects {
+  background-color: #181818;
+}
+
+body.dark-mode .project-card {
+  background-color: #1e1e1e;
+  border: 1px solid #333;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-mode .project-overlay {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+body.dark-mode .skill-line {
+  background-color: #444;
+}
+
+/* ========================================
+   CONTACT SECTION
+======================================== */
+
+body.dark-mode .contact-info {
+  background-color: #121212;
+}
+
+body.dark-mode .contact-note {
+  background-color: #1e1e1e;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-mode .social-btns a {
+  background-color: #2a2a2a;
+  color: #f5f5f5;
+  border: 1px solid #333;
+}
+
+body.dark-mode .social-btns a:hover {
+  background-color: var(--primary-orange);
+  color: #ffffff;
+}
+
+body.dark-mode .contact-form-container {
+  background-color: #1a1a1a;
+}
+
+body.dark-mode .form-group label {
+  color: #d0d0d0;
+}
+
+body.dark-mode .form-group input,
+body.dark-mode .form-group textarea {
+  background-color: #2a2a2a;
+  color: #ffffff;
+  border: 1px solid #444;
+}
+
+body.dark-mode .form-group input:focus,
+body.dark-mode .form-group textarea:focus {
+  border-color: var(--primary-orange);
+}
+
+/* ========================================
+   BUTTONS
+======================================== */
+
+body.dark-mode .btn-contact,
+body.dark-mode .btn-download {
+  background-color: #ffffff;
+  color: #121212 !important;
+}
+
+body.dark-mode .btn-contact:hover,
+body.dark-mode .btn-download:hover,
+body.dark-mode .btn-send:hover {
+  background-color: var(--primary-orange);
+  color: #ffffff !important;
+}
+
+body.dark-mode .btn-send {
+  background-color: var(--primary-orange);
+}
+
+/* ========================================
+   FOOTER
+======================================== */
+
+body.dark-mode .footer {
+  background-color: #1a1a1a;
+  border-top: 1px solid #333;
+}
+
+body.dark-mode .scroll-top {
+  border: 1px solid #444;
+}
+
+body.dark-mode .scroll-top:hover {
+  background-color: var(--primary-orange);
+  border-color: var(--primary-orange);
+  color: #ffffff;
+}
+
+/* ========================================
+   SMOOTH TRANSITION
+======================================== */
+
+body,
+.navbar,
+.hero,
+.about,
+.skills,
+.projects,
+.contact-info,
+.contact-form-container,
+.footer,
+.skill-card,
+.project-card,
+.image-card,
+.contact-note,
+.social-btn,
+.social-btns a,
+.btn-contact,
+.btn-download,
+.btn-send,
+input,
+textarea {
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}

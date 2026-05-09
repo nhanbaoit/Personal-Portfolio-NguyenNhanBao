@@ -322,24 +322,44 @@ document.addEventListener('keydown', (e) => {
    DARK MODE TOGGLE (Optional)
    ======================================== */
 
+
+const themeToggleBtn = document.getElementById('theme-toggle');
+const themeIcon = themeToggleBtn ? themeToggleBtn.querySelector('i') : null;
+
 function initDarkMode() {
+    // Kiểm tra trạng thái đã lưu
     const isDarkMode = localStorage.getItem('darkMode') === 'true';
     if (isDarkMode) {
-        enableDarkMode();
+        document.body.classList.add('dark-mode');
+        if (themeIcon) {
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        }
     }
 }
 
-function enableDarkMode() {
-    document.body.style.backgroundColor = '#1a1a1a';
-    document.body.style.color = '#ffffff';
-    localStorage.setItem('darkMode', 'true');
+if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', () => {
+        // Bật/tắt class dark-mode trên body
+        document.body.classList.toggle('dark-mode');
+        
+        // Cập nhật LocalStorage
+        const isDark = document.body.classList.contains('dark-mode');
+        localStorage.setItem('darkMode', isDark);
+        
+        // Đổi icon tương ứng
+        if (isDark) {
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        } else {
+            themeIcon.classList.remove('fa-sun');
+            themeIcon.classList.add('fa-moon');
+        }
+    });
 }
 
-function disableDarkMode() {
-    document.body.style.backgroundColor = '#f5f5f5';
-    document.body.style.color = '#1a1a1a';
-    localStorage.setItem('darkMode', 'false');
-}
+// Khởi chạy chế độ tối nếu người dùng đã lưu trước đó
+initDarkMode();
 
 // Uncomment to enable dark mode on page load
 // initDarkMode();
