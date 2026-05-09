@@ -23,7 +23,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // Download CV Button
 const downloadButtons = document.querySelectorAll('.btn-primary');
 downloadButtons.forEach(btn => {
-    btn.addEventListener('click', function(e) {
+    btn.addEventListener('click', function (e) {
         if (this.textContent.includes('Download')) {
             e.preventDefault();
             downloadCV();
@@ -34,7 +34,7 @@ downloadButtons.forEach(btn => {
 // Contact Button in Navigation
 const contactNavBtn = document.querySelector('nav .contact-btn');
 if (contactNavBtn) {
-    contactNavBtn.addEventListener('click', function() {
+    contactNavBtn.addEventListener('click', function () {
         document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
     });
 }
@@ -42,7 +42,7 @@ if (contactNavBtn) {
 // View Projects Button
 const viewProjectsBtn = document.querySelector('.btn-secondary');
 if (viewProjectsBtn) {
-    viewProjectsBtn.addEventListener('click', function() {
+    viewProjectsBtn.addEventListener('click', function () {
         document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });
     });
 }
@@ -53,40 +53,60 @@ if (viewProjectsBtn) {
 
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
+    contactForm.addEventListener('submit', function (e) {
         e.preventDefault();
         handleFormSubmit(this);
     });
 }
 
 function handleFormSubmit(form) {
-    // Get form values
-    const name = form.querySelector('input[type="text"]').value;
-    const email = form.querySelector('input[type="email"]').value;
-    const subject = form.querySelectorAll('input[type="text"]')[1].value;
-    const message = form.querySelector('textarea').value;
+    // 1. Lấy giá trị để validate
+    const name = form.querySelector('input[name="firstName"]').value;
+    const email = form.querySelector('input[name="email"]').value;
+    const subject = form.querySelector('input[name="subject"]').value;
+    const message = form.querySelector('textarea[name="message"]').value;
 
-    // Validate form
+    // 2. Validate form
     if (!name || !email || !subject || !message) {
         showNotification('Please fill all fields!', 'error');
         return;
     }
 
-    // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
         showNotification('Please enter a valid email!', 'error');
         return;
     }
 
-    // Show success message
-    showNotification('Thank you! Your message has been sent successfully.', 'success');
-    
-    // Reset form
-    form.reset();
+    // 3. Đóng gói dữ liệu để gửi đi
+    const formData = new FormData(form);
 
-    // Optional: Send to server (requires backend)
-    // sendFormToServer(name, email, subject, message);
+    // 4. Gửi dữ liệu thật đến Formspree bằng Fetch API
+    fetch(form.action, {
+        method: form.method,
+        body: formData,
+        headers: {
+            'Accept': 'application/json'
+        }
+    }).then(response => {
+        if (response.ok) {
+            // Nếu Formspree báo nhận thành công -> Hiện thông báo xanh của bạn
+            showNotification('Thank you! Your message has been sent successfully.', 'success');
+            form.reset();
+        } else {
+            // Nếu lỗi từ server Formspree
+            response.json().then(data => {
+                if (Object.hasOwn(data, 'errors')) {
+                    showNotification(data["errors"].map(error => error["message"]).join(", "), 'error');
+                } else {
+                    showNotification('Oops! There was a problem submitting your form', 'error');
+                }
+            })
+        }
+    }).catch(error => {
+        // Nếu lỗi mạng
+        showNotification('Oops! Network error. Please try again later.', 'error');
+    });
 }
 
 function showNotification(message, type) {
@@ -94,7 +114,7 @@ function showNotification(message, type) {
     const notification = document.createElement('div');
     notification.className = `notification ${type}`;
     notification.textContent = message;
-    
+
     // Style notification
     notification.style.cssText = `
         position: fixed;
@@ -126,17 +146,17 @@ function showNotification(message, type) {
 function downloadCV() {
     // Replace 'your-cv.pdf' with your actual CV file path
     const cvPath = 'your-cv.pdf';
-    
+
     // Check if file exists or show alert
     const link = document.createElement('a');
     link.href = cvPath;
     link.download = 'CV-Data-Analyst.pdf';
-    
+
     // If file doesn't exist, show message
     link.onerror = () => {
         showNotification('CV file not found. Please check back soon!', 'error');
     };
-    
+
     // Try to download
     try {
         document.body.appendChild(link);
@@ -160,11 +180,11 @@ function updateActiveLink() {
     const navLinks = document.querySelectorAll('.nav-links a');
 
     let current = '';
-    
+
     sections.forEach(section => {
         const sectionTop = section.offsetTop;
         const sectionHeight = section.clientHeight;
-        
+
         if (scrollY >= sectionTop - 200) {
             current = section.getAttribute('id');
         }
@@ -248,22 +268,22 @@ document.querySelectorAll('section').forEach(section => {
 
 const serviceCards = document.querySelectorAll('.service-card');
 serviceCards.forEach(card => {
-    card.addEventListener('mouseenter', function() {
+    card.addEventListener('mouseenter', function () {
         this.style.transform = 'translateY(-10px)';
     });
-    
-    card.addEventListener('mouseleave', function() {
+
+    card.addEventListener('mouseleave', function () {
         this.style.transform = 'translateY(0)';
     });
 });
 
 const projectCards = document.querySelectorAll('.project-card');
 projectCards.forEach(card => {
-    card.addEventListener('mouseenter', function() {
+    card.addEventListener('mouseenter', function () {
         this.style.transform = 'translateY(-10px)';
     });
-    
-    card.addEventListener('mouseleave', function() {
+
+    card.addEventListener('mouseleave', function () {
         this.style.transform = 'translateY(0)';
     });
 });
@@ -274,11 +294,11 @@ projectCards.forEach(card => {
 
 const formInputs = document.querySelectorAll('.form-input, .form-textarea');
 formInputs.forEach(input => {
-    input.addEventListener('focus', function() {
+    input.addEventListener('focus', function () {
         this.style.transform = 'scale(1.02)';
     });
-    
-    input.addEventListener('blur', function() {
+
+    input.addEventListener('blur', function () {
         this.style.transform = 'scale(1)';
     });
 });
@@ -344,7 +364,7 @@ function addAnimation(element, animationName, duration = 0.6) {
 // Debounce function for better performance
 function debounce(func, delay) {
     let timeoutId;
-    return function(...args) {
+    return function (...args) {
         clearTimeout(timeoutId);
         timeoutId = setTimeout(() => func.apply(this, args), delay);
     };
@@ -353,7 +373,7 @@ function debounce(func, delay) {
 // Throttle function
 function throttle(func, limit) {
     let inThrottle;
-    return function(...args) {
+    return function (...args) {
         if (!inThrottle) {
             func.apply(this, args);
             inThrottle = true;
@@ -368,11 +388,11 @@ function throttle(func, limit) {
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Portfolio loaded successfully!');
-    
+
     // Initialize all features
     updateActiveLink();
     updateNavbarShadow();
-    
+
     // Add welcome message
     console.log('%cWelcome to my Portfolio!', 'font-size: 20px; color: #ff5722; font-weight: bold;');
 });
