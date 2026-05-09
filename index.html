@@ -158,26 +158,27 @@
             <div class="projects-grid">
                 <div class="project-card">
                     <div class="project-img">
-                        <img src="public/img/Techstore.png" alt="Project 1">
+                        <img src="public/img/Lab-Laravel.png" alt="User Management Lab">
                         <div class="project-overlay"><i class="fa-solid fa-external-link-alt"></i></div>
                     </div>
                     <div class="project-info">
-                        <h3>TechStore (BTD) <span
-                                style="font-size: 0.7em; font-weight: normal; color: #e67e22; font-style: italic;">- In
-                                Development</span></h3>
+                        <h3>User Management Lab <span
+                                style="font-size: 0.7em; font-weight: normal; color: #7f8c8d; font-style: italic;">-
+                                Academic Project</span></h3>
 
                         <div class="project-skills">
-                            <span class="skill-line"></span> Skills: HTML, CSS, JavaScript, PHP, MySQL
+                            <span class="skill-line"></span> Skills: HTML, CSS, PHP, Laravel, MySQL
                         </div>
 
-                        <p>A dynamic e-commerce web application tailored for tech retail. This project is currently
-                            under active development, focusing on building a responsive user interface and efficient
-                            database management.</p>
+                        <p>A back-end focused demonstration project implementing user authentication and core CRUD
+                            operations. It features secure user registration, login flows, and database management
+                            utilizing the Laravel framework.</p>
 
                         <div class="project-links">
                             <a href="#"><i class="fa-brands fa-github"></i> Github</a>
-                            <a href="https://technology-store.infinityfree.me/"><i class="fa-brands fa-chrome"></i> Live
-                                Demo</a>
+                            <!-- Ghi chú: Vì bài lab thường chạy trên Localhost, bạn có thể xóa dòng thẻ a Live Demo bên dưới, 
+                 hoặc thay link thành một video quay màn hình cách hệ thống hoạt động nhé -->
+                            <!-- <a href="#"><i class="fa-brands fa-youtube"></i> Video Demo</a> -->
                         </div>
                     </div>
                 </div>
@@ -227,31 +228,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="public/img/Front-End-Project.png" alt="Project 4">
-                        <div class="project-overlay"><i class="fa-solid fa-external-link-alt"></i></div>
-                    </div>
-                    <div class="project-info">
-                        <h3>Salehub - Fashion E-commerce UI</h3>
-
-                        <div class="project-skills">
-                            <span class="skill-line"></span> Skills: HTML, CSS
-                        </div>
-
-                        <p>A foundational front-end project focusing on building a visually appealing and responsive
-                            user interface for a fashion retail brand. This coursework demonstrates my core skills in
-                            web layout structuring and UI styling.</p>
-
-                        <div class="project-links">
-                            <a href="#"><i class="fa-brands fa-github"></i> Github</a>
-                            <a href="#"><i class="fa-brands fa-chrome"></i> Live Demo</a>
-                        </div>
-                    </div>
-                </div>
-
-
-
             </div>
         </div>
     </section>
@@ -283,31 +259,37 @@
             </div>
             <div class="contact-form-container">
                 <h3>Send Me A Message</h3>
-                <form id="contactForm">
+
+                <!-- Đã chèn link Formspree của bạn vào đây -->
+                <form id="contactForm" action="https://formspree.io/f/mykonldj" method="POST">
+
                     <div class="form-row">
                         <div class="form-group">
                             <label>First Name</label>
-                            <input type="text" placeholder="e.g. John">
+                            <input type="text" name="firstName" placeholder="e.g. John" required>
                         </div>
                         <div class="form-group">
                             <label>Email Address</label>
-                            <input type="email" placeholder="e.g. john@example.com">
+                            <input type="email" name="email" placeholder="e.g. john@example.com" required>
                         </div>
                     </div>
+
                     <div class="form-group">
                         <label>Subject</label>
-                        <input type="text" placeholder="Enquiry">
+                        <input type="text" name="subject" placeholder="Enquiry" required>
                     </div>
+
                     <div class="form-group">
                         <label>Message</label>
-                        <textarea rows="5" placeholder="Write your message here..."></textarea>
+                        <textarea name="message" rows="5" placeholder="Write your message here..." required></textarea>
                     </div>
+
                     <button type="submit" class="btn-send">
                         <i class="fa-solid fa-paper-plane"></i> Send Message
                     </button>
+
                 </form>
             </div>
-        </div>
     </section>
 
     <!-- FOOTER -->
