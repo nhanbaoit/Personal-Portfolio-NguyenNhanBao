@@ -723,7 +723,45 @@ body.dark-mode .logo-circle {
   background: #ffffff;
   color: #121212;
 }
+/* ========================================
+   NAVBAR LINKS & HOVER EFFECT (MINIMALIST)
+   ======================================== */
 
+.nav-links a {
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #555555; /* Màu xám tối cho các mục chưa chọn */
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 6px; /* Khoảng cách từ chữ xuống đường gạch */
+  transition: all 0.3s ease;
+}
+
+/* 2. Trạng thái khi di chuột (Hover) hoặc đang chọn (Active) */
+.nav-links a:hover,
+.nav-links a.active {
+  color: #000000; /* Chữ đổi thành đen tuyền */
+  font-weight: 600; /* Chữ đậm lên giống trong hình */
+}
+
+/* 3. Tạo đường gạch chân ngầm (Đen, dày, ngắn) */
+.nav-links a:not(.btn-contact)::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0; /* Ban đầu ẩn đi */
+  height: 3px; /* Đường gạch dày dặn hơn (3px) */
+  background-color: #000000; /* Màu đen */
+  transition: width 0.3s ease-in-out;
+}
+
+/* 4. Hiển thị đường gạch ngắn (25px) khi Hover hoặc Active */
+.nav-links a:not(.btn-contact):hover::after,
+.nav-links a.active::after {
+  width: 24px; /* Chỉ dài ra 24px tạo thành vệt ngắn giống y hình */
+}
 /* ========================================
    HERO SECTION
 ======================================== */

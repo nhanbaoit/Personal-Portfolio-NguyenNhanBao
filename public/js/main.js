@@ -21,15 +21,14 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
    ======================================== */
 
 // Download CV Button
-const downloadButtons = document.querySelectorAll('.btn-primary');
-downloadButtons.forEach(btn => {
-    btn.addEventListener('click', function (e) {
-        if (this.textContent.includes('Download')) {
-            e.preventDefault();
-            downloadCV();
-        }
+// Download CV Button
+const cvDownloadBtn = document.getElementById('cv-download-btn');
+if (cvDownloadBtn) {
+    cvDownloadBtn.addEventListener('click', function () {
+        // Hiện thông báo ở góc phải
+        showNotification('CV is downloading! Thank you for your interest.', 'success');
     });
-});
+}
 
 // Contact Button in Navigation
 const contactNavBtn = document.querySelector('nav .contact-btn');
