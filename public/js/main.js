@@ -341,11 +341,11 @@ if (themeToggleBtn) {
     themeToggleBtn.addEventListener('click', () => {
         // Bật/tắt class dark-mode trên body
         document.body.classList.toggle('dark-mode');
-        
+
         // Cập nhật LocalStorage
         const isDark = document.body.classList.contains('dark-mode');
         localStorage.setItem('darkMode', isDark);
-        
+
         // Đổi icon tương ứng
         if (isDark) {
             themeIcon.classList.remove('fa-moon');
@@ -415,3 +415,46 @@ document.addEventListener('DOMContentLoaded', () => {
     // Add welcome message
     console.log('%cWelcome to my Portfolio!', 'font-size: 20px; color: #ff5722; font-weight: bold;');
 });
+
+/* ========================================
+   ABOUT IMAGE 3D TILT EFFECT
+======================================== */
+
+function initAboutImage3DTilt() {
+    const aboutCard = document.querySelector(".about-3d-card");
+    const aboutInner = document.querySelector(".about-image-inner");
+
+    if (!aboutCard || !aboutInner) return;
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isMobile = window.innerWidth <= 768;
+
+    if (reduceMotion || isMobile) return;
+
+    aboutCard.addEventListener("mousemove", (e) => {
+        const rect = aboutCard.getBoundingClientRect();
+
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateX = -((y - centerY) / centerY) * 7;
+        const rotateY = ((x - centerX) / centerX) * 7;
+
+        const moveX = ((x - centerX) / centerX) * 8;
+        const moveY = ((y - centerY) / centerY) * 8;
+
+        aboutInner.style.transform = `
+            rotateX(${rotateX}deg)
+            rotateY(${rotateY}deg)
+            translate3d(${moveX}px, ${moveY}px, 20px)
+        `;
+    });
+
+    aboutCard.addEventListener("mouseleave", () => {
+        aboutInner.style.transform =
+            "rotateX(0deg) rotateY(0deg) translate3d(0, 0, 0)";
+    });
+}
