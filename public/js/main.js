@@ -1,423 +1,414 @@
 /* ========================================
-   SMOOTH SCROLL & NAVIGATION
-   ======================================== */
+   PORTFOLIO MAIN JAVASCRIPT
+======================================== */
 
-// Smooth scroll to section when clicking nav links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-    });
-});
+let ticking = false;
 
 /* ========================================
-   BUTTONS FUNCTIONALITY
-   ======================================== */
+   NOTIFICATION
+======================================== */
 
-// Download CV Button
-// Download CV Button
-const cvDownloadBtn = document.getElementById('cv-download-btn');
-if (cvDownloadBtn) {
-    cvDownloadBtn.addEventListener('click', function () {
-        // Hiện thông báo ở góc phải
-        showNotification('CV is downloading! Thank you for your interest.', 'success');
+function showNotification(message, type = "success") {
+    const notification = document.createElement("div");
+    notification.className = `notification ${type}`;
+    notification.textContent = message;
+
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: ${type === "success" ? "#4CAF50" : "#f44336"};
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 4px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 10000;
+        font-weight: 500;
+        max-width: 320px;
+        line-height: 1.5;
+        transform: translateX(120%);
+        opacity: 0;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+    `;
+
+    document.body.appendChild(notification);
+
+    requestAnimationFrame(() => {
+        notification.style.transform = "translateX(0)";
+        notification.style.opacity = "1";
     });
+
+    setTimeout(() => {
+        notification.style.transform = "translateX(120%)";
+        notification.style.opacity = "0";
+
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
 }
 
-// Contact Button in Navigation
-const contactNavBtn = document.querySelector('nav .contact-btn');
-if (contactNavBtn) {
-    contactNavBtn.addEventListener('click', function () {
-        document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
-    });
-}
+/* ========================================
+   PAGE LOADER
+======================================== */
 
-// View Projects Button
-const viewProjectsBtn = document.querySelector('.btn-secondary');
-if (viewProjectsBtn) {
-    viewProjectsBtn.addEventListener('click', function () {
-        document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });
+function initPageLoader() {
+    const loader = document.getElementById("page-loader");
+
+    if (!loader) return;
+
+    window.addEventListener("load", () => {
+        setTimeout(() => {
+            loader.classList.add("hide");
+        }, 650);
+
+        setTimeout(() => {
+            loader.remove();
+        }, 1250);
     });
 }
 
 /* ========================================
-   FORM HANDLING
-   ======================================== */
+   SAFE SMOOTH SCROLL
+======================================== */
 
-const contactForm = document.getElementById('contactForm');
-if (contactForm) {
-    contactForm.addEventListener('submit', function (e) {
+function initSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+            const href = this.getAttribute("href");
+
+            if (!href || href === "#") return;
+
+            const target = document.querySelector(href);
+
+            if (target) {
+                e.preventDefault();
+
+                target.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                });
+            }
+        });
+    });
+}
+
+/* ========================================
+   BUTTONS
+======================================== */
+
+function initButtons() {
+    const cvDownloadBtn = document.getElementById("cv-download-btn");
+
+    if (cvDownloadBtn) {
+        cvDownloadBtn.addEventListener("click", () => {
+            showNotification("CV is downloading! Thank you for your interest.", "success");
+        });
+    }
+
+    const contactNavBtn = document.querySelector("nav .btn-contact");
+
+    if (contactNavBtn) {
+        contactNavBtn.addEventListener("click", (e) => {
+            const contactSection = document.getElementById("contact");
+
+            if (contactSection) {
+                e.preventDefault();
+                contactSection.scrollIntoView({ behavior: "smooth" });
+            }
+        });
+    }
+}
+
+/* ========================================
+   CONTACT FORM
+======================================== */
+
+function initContactForm() {
+    const contactForm = document.getElementById("contactForm");
+
+    if (!contactForm) return;
+
+    contactForm.addEventListener("submit", function (e) {
         e.preventDefault();
         handleFormSubmit(this);
     });
 }
 
 function handleFormSubmit(form) {
-    // 1. Lấy giá trị để validate
-    const name = form.querySelector('input[name="firstName"]').value;
-    const email = form.querySelector('input[name="email"]').value;
-    const subject = form.querySelector('input[name="subject"]').value;
-    const message = form.querySelector('textarea[name="message"]').value;
+    const nameInput = form.querySelector('input[name="firstName"]');
+    const emailInput = form.querySelector('input[name="email"]');
+    const subjectInput = form.querySelector('input[name="subject"]');
+    const messageInput = form.querySelector('textarea[name="message"]');
 
-    // 2. Validate form
+    const name = nameInput ? nameInput.value.trim() : "";
+    const email = emailInput ? emailInput.value.trim() : "";
+    const subject = subjectInput ? subjectInput.value.trim() : "";
+    const message = messageInput ? messageInput.value.trim() : "";
+
     if (!name || !email || !subject || !message) {
-        showNotification('Please fill all fields!', 'error');
+        showNotification("Please fill all fields!", "error");
         return;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     if (!emailRegex.test(email)) {
-        showNotification('Please enter a valid email!', 'error');
+        showNotification("Please enter a valid email!", "error");
         return;
     }
 
-    // 3. Đóng gói dữ liệu để gửi đi
+    const submitButton = form.querySelector('button[type="submit"]');
+    const originalText = submitButton ? submitButton.innerHTML : "";
+
+    if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
+    }
+
     const formData = new FormData(form);
 
-    // 4. Gửi dữ liệu thật đến Formspree bằng Fetch API
     fetch(form.action, {
         method: form.method,
         body: formData,
         headers: {
-            'Accept': 'application/json'
-        }
-    }).then(response => {
-        if (response.ok) {
-            // Nếu Formspree báo nhận thành công -> Hiện thông báo xanh của bạn
-            showNotification('Thank you! Your message has been sent successfully.', 'success');
-            form.reset();
-        } else {
-            // Nếu lỗi từ server Formspree
-            response.json().then(data => {
-                if (Object.hasOwn(data, 'errors')) {
-                    showNotification(data["errors"].map(error => error["message"]).join(", "), 'error');
+            Accept: "application/json",
+        },
+    })
+        .then((response) => {
+            if (response.ok) {
+                showNotification("Thank you! Your message has been sent successfully.", "success");
+                form.reset();
+                return;
+            }
+
+            response.json().then((data) => {
+                if (Object.hasOwn(data, "errors")) {
+                    showNotification(
+                        data.errors.map((error) => error.message).join(", "),
+                        "error"
+                    );
                 } else {
-                    showNotification('Oops! There was a problem submitting your form', 'error');
+                    showNotification("Oops! There was a problem submitting your form.", "error");
                 }
-            })
-        }
-    }).catch(error => {
-        // Nếu lỗi mạng
-        showNotification('Oops! Network error. Please try again later.', 'error');
-    });
-}
-
-function showNotification(message, type) {
-    // Create notification element
-    const notification = document.createElement('div');
-    notification.className = `notification ${type}`;
-    notification.textContent = message;
-
-    // Style notification
-    notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: ${type === 'success' ? '#4CAF50' : '#f44336'};
-        color: white;
-        padding: 1rem 1.5rem;
-        border-radius: 4px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        z-index: 10000;
-        animation: slideIn 0.3s ease-out;
-        font-weight: 500;
-    `;
-
-    document.body.appendChild(notification);
-
-    // Remove notification after 3 seconds
-    setTimeout(() => {
-        notification.style.animation = 'slideOut 0.3s ease-out';
-        setTimeout(() => notification.remove(), 300);
-    }, 3000);
+            });
+        })
+        .catch(() => {
+            showNotification("Oops! Network error. Please try again later.", "error");
+        })
+        .finally(() => {
+            if (submitButton) {
+                submitButton.disabled = false;
+                submitButton.innerHTML = originalText;
+            }
+        });
 }
 
 /* ========================================
-   DOWNLOAD CV
-   ======================================== */
+   ACTIVE LINK + NAVBAR
+======================================== */
 
-function downloadCV() {
-    // Replace 'your-cv.pdf' with your actual CV file path
-    const cvPath = 'your-cv.pdf';
+function updateActiveLink() {
+    const sections = document.querySelectorAll("section[id]");
+    const navLinks = document.querySelectorAll(".nav-links a");
 
-    // Check if file exists or show alert
-    const link = document.createElement('a');
-    link.href = cvPath;
-    link.download = 'CV-Data-Analyst.pdf';
+    let current = "";
 
-    // If file doesn't exist, show message
-    link.onerror = () => {
-        showNotification('CV file not found. Please check back soon!', 'error');
-    };
+    sections.forEach((section) => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
 
-    // Try to download
-    try {
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    } catch (error) {
-        showNotification('Please place your CV file (your-cv.pdf) in the same folder as this HTML file.', 'error');
+        if (
+            window.scrollY >= sectionTop - 220 &&
+            window.scrollY < sectionTop + sectionHeight
+        ) {
+            current = section.getAttribute("id");
+        }
+    });
+
+    navLinks.forEach((link) => {
+        link.classList.remove("active");
+
+        if (link.getAttribute("href") === `#${current}`) {
+            link.classList.add("active");
+        }
+    });
+}
+
+function updateNavbarShadow() {
+    const navbar = document.querySelector(".navbar");
+
+    if (!navbar) return;
+
+    if (window.scrollY > 50) {
+        navbar.classList.add("scrolled");
+    } else {
+        navbar.classList.remove("scrolled");
     }
 }
 
-/* ========================================
-   ACTIVE LINK HIGHLIGHTING
-   ======================================== */
+function handleScroll() {
+    if (!ticking) {
+        window.requestAnimationFrame(() => {
+            updateActiveLink();
+            updateNavbarShadow();
+            ticking = false;
+        });
 
-window.addEventListener('scroll', () => {
-    updateActiveLink();
-});
-
-function updateActiveLink() {
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-links a');
-
-    let current = '';
-
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-
-        if (scrollY >= sectionTop - 200) {
-            current = section.getAttribute('id');
-        }
-    });
-
-    navLinks.forEach(link => {
-        link.style.color = '';
-        if (link.getAttribute('href') === `#${current}`) {
-            link.style.color = 'var(--accent)';
-        }
-    });
-}
-
-/* ========================================
-   SCROLL TO TOP ANIMATION
-   ======================================== */
-
-window.addEventListener('scroll', () => {
-    updateNavbarShadow();
-});
-
-function updateNavbarShadow() {
-    const navbar = document.querySelector('nav');
-    if (window.scrollY > 50) {
-        navbar.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
-    } else {
-        navbar.style.boxShadow = '0 2px 10px rgba(0,0,0,0.05)';
+        ticking = true;
     }
 }
 
 /* ========================================
    LAZY LOAD IMAGES
-   ======================================== */
+======================================== */
 
-if ('IntersectionObserver' in window) {
+function initLazyImages() {
+    const images = document.querySelectorAll("img");
+
+    if (!("IntersectionObserver" in window)) {
+        images.forEach((img) => {
+            img.style.opacity = "1";
+        });
+        return;
+    }
+
     const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
+        entries.forEach((entry) => {
             if (entry.isIntersecting) {
                 const img = entry.target;
-                img.style.opacity = '1';
+                img.style.opacity = "1";
                 observer.unobserve(img);
             }
         });
     });
 
-    document.querySelectorAll('img').forEach(img => {
-        img.style.opacity = '0';
-        img.style.transition = 'opacity 0.3s ease';
+    images.forEach((img) => {
+        img.style.opacity = "0";
+        img.style.transition = "opacity 0.4s ease";
         imageObserver.observe(img);
     });
 }
 
 /* ========================================
-   SECTION ANIMATION ON SCROLL
-   ======================================== */
+   SCROLL REVEAL
+======================================== */
 
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -100px 0px'
-};
+function initScrollReveal() {
+    const revealElements = document.querySelectorAll(".reveal-section, .reveal-item");
 
-const sectionObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
+    if (!revealElements.length) return;
+
+    if (!("IntersectionObserver" in window)) {
+        revealElements.forEach((element) => {
+            element.classList.add("is-visible");
+        });
+        return;
+    }
+
+    const observer = new IntersectionObserver(
+        (entries, observerInstance) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("is-visible");
+                    observerInstance.unobserve(entry.target);
+                }
+            });
+        },
+        {
+            threshold: 0.12,
+            rootMargin: "0px 0px -80px 0px",
         }
-    });
-}, observerOptions);
+    );
 
-document.querySelectorAll('section').forEach(section => {
-    section.style.opacity = '0';
-    section.style.transform = 'translateY(20px)';
-    section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    sectionObserver.observe(section);
-});
+    revealElements.forEach((element) => {
+        observer.observe(element);
+    });
+}
 
 /* ========================================
-   CARD HOVER EFFECTS
-   ======================================== */
+   FORM INPUT FOCUS
+======================================== */
 
-const serviceCards = document.querySelectorAll('.service-card');
-serviceCards.forEach(card => {
-    card.addEventListener('mouseenter', function () {
-        this.style.transform = 'translateY(-10px)';
+function initFormFocusEffects() {
+    const formInputs = document.querySelectorAll(".form-group input, .form-group textarea");
+
+    formInputs.forEach((input) => {
+        input.addEventListener("focus", function () {
+            this.style.transform = "scale(1.01)";
+        });
+
+        input.addEventListener("blur", function () {
+            this.style.transform = "scale(1)";
+        });
     });
-
-    card.addEventListener('mouseleave', function () {
-        this.style.transform = 'translateY(0)';
-    });
-});
-
-const projectCards = document.querySelectorAll('.project-card');
-projectCards.forEach(card => {
-    card.addEventListener('mouseenter', function () {
-        this.style.transform = 'translateY(-10px)';
-    });
-
-    card.addEventListener('mouseleave', function () {
-        this.style.transform = 'translateY(0)';
-    });
-});
-
-/* ========================================
-   FORM INPUT FOCUS EFFECTS
-   ======================================== */
-
-const formInputs = document.querySelectorAll('.form-input, .form-textarea');
-formInputs.forEach(input => {
-    input.addEventListener('focus', function () {
-        this.style.transform = 'scale(1.02)';
-    });
-
-    input.addEventListener('blur', function () {
-        this.style.transform = 'scale(1)';
-    });
-});
+}
 
 /* ========================================
    KEYBOARD NAVIGATION
-   ======================================== */
+======================================== */
 
-document.addEventListener('keydown', (e) => {
-    // Press 'H' to go to Home
-    if (e.key.toLowerCase() === 'h') {
-        document.getElementById('hero').scrollIntoView({ behavior: 'smooth' });
-    }
-    // Press 'C' to go to Contact
-    if (e.key.toLowerCase() === 'c') {
-        document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
-    }
-});
+function initKeyboardNavigation() {
+    document.addEventListener("keydown", (e) => {
+        const key = e.key.toLowerCase();
 
-/* ========================================
-   DARK MODE TOGGLE (Optional)
-   ======================================== */
+        if (key === "h") {
+            const homeSection = document.getElementById("home");
 
-
-const themeToggleBtn = document.getElementById('theme-toggle');
-const themeIcon = themeToggleBtn ? themeToggleBtn.querySelector('i') : null;
-
-function initDarkMode() {
-    // Kiểm tra trạng thái đã lưu
-    const isDarkMode = localStorage.getItem('darkMode') === 'true';
-    if (isDarkMode) {
-        document.body.classList.add('dark-mode');
-        if (themeIcon) {
-            themeIcon.classList.remove('fa-moon');
-            themeIcon.classList.add('fa-sun');
+            if (homeSection) {
+                homeSection.scrollIntoView({ behavior: "smooth" });
+            }
         }
-    }
-}
 
-if (themeToggleBtn) {
-    themeToggleBtn.addEventListener('click', () => {
-        // Bật/tắt class dark-mode trên body
-        document.body.classList.toggle('dark-mode');
+        if (key === "c") {
+            const contactSection = document.getElementById("contact");
 
-        // Cập nhật LocalStorage
-        const isDark = document.body.classList.contains('dark-mode');
-        localStorage.setItem('darkMode', isDark);
-
-        // Đổi icon tương ứng
-        if (isDark) {
-            themeIcon.classList.remove('fa-moon');
-            themeIcon.classList.add('fa-sun');
-        } else {
-            themeIcon.classList.remove('fa-sun');
-            themeIcon.classList.add('fa-moon');
+            if (contactSection) {
+                contactSection.scrollIntoView({ behavior: "smooth" });
+            }
         }
     });
 }
 
-// Khởi chạy chế độ tối nếu người dùng đã lưu trước đó
-initDarkMode();
-
-// Uncomment to enable dark mode on page load
-// initDarkMode();
-
 /* ========================================
-   UTILITY FUNCTIONS
-   ======================================== */
+   DARK MODE
+======================================== */
 
-// Smooth scroll to element
-function smoothScroll(target) {
-    const element = document.querySelector(target);
-    if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-    }
-}
+function initDarkMode() {
+    const themeToggleBtn = document.getElementById("theme-toggle");
+    const themeIcon = themeToggleBtn ? themeToggleBtn.querySelector("i") : null;
 
-// Add CSS animation
-function addAnimation(element, animationName, duration = 0.6) {
-    element.style.animation = `${animationName} ${duration}s ease-out`;
-}
+    const isDarkMode = localStorage.getItem("darkMode") === "true";
 
-// Debounce function for better performance
-function debounce(func, delay) {
-    let timeoutId;
-    return function (...args) {
-        clearTimeout(timeoutId);
-        timeoutId = setTimeout(() => func.apply(this, args), delay);
-    };
-}
+    if (isDarkMode) {
+        document.body.classList.add("dark-mode");
 
-// Throttle function
-function throttle(func, limit) {
-    let inThrottle;
-    return function (...args) {
-        if (!inThrottle) {
-            func.apply(this, args);
-            inThrottle = true;
-            setTimeout(() => inThrottle = false, limit);
+        if (themeIcon) {
+            themeIcon.classList.remove("fa-moon");
+            themeIcon.classList.add("fa-sun");
         }
-    };
+    }
+
+    if (!themeToggleBtn) return;
+
+    themeToggleBtn.addEventListener("click", () => {
+        document.body.classList.toggle("dark-mode");
+
+        const isDark = document.body.classList.contains("dark-mode");
+        localStorage.setItem("darkMode", isDark);
+
+        if (!themeIcon) return;
+
+        if (isDark) {
+            themeIcon.classList.remove("fa-moon");
+            themeIcon.classList.add("fa-sun");
+        } else {
+            themeIcon.classList.remove("fa-sun");
+            themeIcon.classList.add("fa-moon");
+        }
+    });
 }
 
 /* ========================================
-   INITIALIZATION
-   ======================================== */
-
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('Portfolio loaded successfully!');
-
-    // Initialize all features
-    updateActiveLink();
-    updateNavbarShadow();
-
-    // Add welcome message
-    console.log('%cWelcome to my Portfolio!', 'font-size: 20px; color: #ff5722; font-weight: bold;');
-});
-
-/* ========================================
-   ABOUT IMAGE 3D TILT EFFECT
+   ABOUT IMAGE 3D TILT
 ======================================== */
 
 function initAboutImage3DTilt() {
@@ -440,16 +431,16 @@ function initAboutImage3DTilt() {
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
 
-        const rotateX = -((y - centerY) / centerY) * 7;
-        const rotateY = ((x - centerX) / centerX) * 7;
+        const rotateX = -((y - centerY) / centerY) * 4;
+        const rotateY = ((x - centerX) / centerX) * 4;
 
-        const moveX = ((x - centerX) / centerX) * 8;
-        const moveY = ((y - centerY) / centerY) * 8;
+        const moveX = ((x - centerX) / centerX) * 6;
+        const moveY = ((y - centerY) / centerY) * 6;
 
         aboutInner.style.transform = `
             rotateX(${rotateX}deg)
             rotateY(${rotateY}deg)
-            translate3d(${moveX}px, ${moveY}px, 20px)
+            translate3d(${moveX}px, ${moveY}px, 18px)
         `;
     });
 
@@ -458,3 +449,31 @@ function initAboutImage3DTilt() {
             "rotateX(0deg) rotateY(0deg) translate3d(0, 0, 0)";
     });
 }
+
+/* ========================================
+   INITIALIZATION
+======================================== */
+
+document.addEventListener("DOMContentLoaded", () => {
+    initPageLoader();
+    initSmoothScroll();
+    initButtons();
+    initContactForm();
+    initLazyImages();
+    initScrollReveal();
+    initFormFocusEffects();
+    initKeyboardNavigation();
+    initDarkMode();
+    initAboutImage3DTilt();
+
+    updateActiveLink();
+    updateNavbarShadow();
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    console.log("Portfolio loaded successfully!");
+    console.log(
+        "%cWelcome to my Portfolio!",
+        "font-size: 20px; color: #ff5722; font-weight: bold;"
+    );
+});
