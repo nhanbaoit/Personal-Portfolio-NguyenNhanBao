@@ -58,35 +58,39 @@ function initPageLoader() {
     window.addEventListener("load", () => {
         setTimeout(() => {
             loader.classList.add("hide");
-        }, 650);
+        }, 750);
 
         setTimeout(() => {
             loader.remove();
-        }, 1250);
+        }, 1350);
     });
 }
 
 /* ========================================
-   SAFE SMOOTH SCROLL
+   SMOOTH SCROLL
 ======================================== */
 
 function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-        anchor.addEventListener("click", function (e) {
+        anchor.addEventListener("click", function(e) {
             const href = this.getAttribute("href");
 
             if (!href || href === "#") return;
 
             const target = document.querySelector(href);
 
-            if (target) {
-                e.preventDefault();
+            if (!target) return;
 
-                target.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start",
-                });
-            }
+            e.preventDefault();
+
+            const navbar = document.querySelector(".navbar");
+            const navbarHeight = navbar ? navbar.offsetHeight : 0;
+            const targetTop = target.getBoundingClientRect().top + window.scrollY - navbarHeight - 20;
+
+            window.scrollTo({
+                top: targetTop,
+                behavior: "smooth",
+            });
         });
     });
 }
@@ -110,10 +114,18 @@ function initButtons() {
         contactNavBtn.addEventListener("click", (e) => {
             const contactSection = document.getElementById("contact");
 
-            if (contactSection) {
-                e.preventDefault();
-                contactSection.scrollIntoView({ behavior: "smooth" });
-            }
+            if (!contactSection) return;
+
+            e.preventDefault();
+
+            const navbar = document.querySelector(".navbar");
+            const navbarHeight = navbar ? navbar.offsetHeight : 0;
+            const contactTop = contactSection.getBoundingClientRect().top + window.scrollY - navbarHeight - 20;
+
+            window.scrollTo({
+                top: contactTop,
+                behavior: "smooth",
+            });
         });
     }
 }
@@ -127,7 +139,7 @@ function initContactForm() {
 
     if (!contactForm) return;
 
-    contactForm.addEventListener("submit", function (e) {
+    contactForm.addEventListener("submit", function(e) {
         e.preventDefault();
         handleFormSubmit(this);
     });
@@ -167,12 +179,12 @@ function handleFormSubmit(form) {
     const formData = new FormData(form);
 
     fetch(form.action, {
-        method: form.method,
-        body: formData,
-        headers: {
-            Accept: "application/json",
-        },
-    })
+            method: form.method,
+            body: formData,
+            headers: {
+                Accept: "application/json",
+            },
+        })
         .then((response) => {
             if (response.ok) {
                 showNotification("Thank you! Your message has been sent successfully.", "success");
@@ -180,7 +192,7 @@ function handleFormSubmit(form) {
                 return;
             }
 
-            response.json().then((data) => {
+            return response.json().then((data) => {
                 if (Object.hasOwn(data, "errors")) {
                     showNotification(
                         data.errors.map((error) => error.message).join(", "),
@@ -217,7 +229,7 @@ function updateActiveLink() {
         const sectionHeight = section.offsetHeight;
 
         if (
-            window.scrollY >= sectionTop - 220 &&
+            window.scrollY >= sectionTop - 240 &&
             window.scrollY < sectionTop + sectionHeight
         ) {
             current = section.getAttribute("id");
@@ -245,11 +257,29 @@ function updateNavbarShadow() {
     }
 }
 
+/* ========================================
+   SCROLL PROGRESS BAR
+   Optional: works only if you add .scroll-progress-fill in HTML
+======================================== */
+
+function updateScrollProgress() {
+    const progressBar = document.querySelector(".scroll-progress-fill");
+
+    if (!progressBar) return;
+
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+
+    progressBar.style.width = `${progress}%`;
+}
+
 function handleScroll() {
     if (!ticking) {
         window.requestAnimationFrame(() => {
             updateActiveLink();
             updateNavbarShadow();
+            updateScrollProgress();
             ticking = false;
         });
 
@@ -264,26 +294,43 @@ function handleScroll() {
 function initLazyImages() {
     const images = document.querySelectorAll("img");
 
+    if (!images.length) return;
+
     if (!("IntersectionObserver" in window)) {
         images.forEach((img) => {
-            img.style.opacity = "1";
+            img.classList.add("image-loaded");
         });
         return;
     }
 
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
+    const imageObserver = new IntersectionObserver(
+        (entries, observer) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+
                 const img = entry.target;
-                img.style.opacity = "1";
+
+                if (img.complete) {
+                    img.classList.add("image-loaded");
+                } else {
+                    img.addEventListener(
+                        "load",
+                        () => {
+                            img.classList.add("image-loaded");
+                        }, { once: true }
+                    );
+                }
+
                 observer.unobserve(img);
-            }
-        });
-    });
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: "120px",
+        }
+    );
 
     images.forEach((img) => {
-        img.style.opacity = "0";
-        img.style.transition = "opacity 0.4s ease";
+        img.classList.add("lazy-image");
         imageObserver.observe(img);
     });
 }
@@ -312,8 +359,7 @@ function initScrollReveal() {
                     observerInstance.unobserve(entry.target);
                 }
             });
-        },
-        {
+        }, {
             threshold: 0.12,
             rootMargin: "0px 0px -80px 0px",
         }
@@ -332,39 +378,13 @@ function initFormFocusEffects() {
     const formInputs = document.querySelectorAll(".form-group input, .form-group textarea");
 
     formInputs.forEach((input) => {
-        input.addEventListener("focus", function () {
+        input.addEventListener("focus", function() {
             this.style.transform = "scale(1.01)";
         });
 
-        input.addEventListener("blur", function () {
+        input.addEventListener("blur", function() {
             this.style.transform = "scale(1)";
         });
-    });
-}
-
-/* ========================================
-   KEYBOARD NAVIGATION
-======================================== */
-
-function initKeyboardNavigation() {
-    document.addEventListener("keydown", (e) => {
-        const key = e.key.toLowerCase();
-
-        if (key === "h") {
-            const homeSection = document.getElementById("home");
-
-            if (homeSection) {
-                homeSection.scrollIntoView({ behavior: "smooth" });
-            }
-        }
-
-        if (key === "c") {
-            const contactSection = document.getElementById("contact");
-
-            if (contactSection) {
-                contactSection.scrollIntoView({ behavior: "smooth" });
-            }
-        }
     });
 }
 
@@ -451,6 +471,21 @@ function initAboutImage3DTilt() {
 }
 
 /* ========================================
+   HERO TECH BADGES ANIMATION
+======================================== */
+
+function initHeroBadges() {
+    const badges = document.querySelectorAll(".hero-tech-badges span");
+
+    if (!badges.length) return;
+
+    badges.forEach((badge, index) => {
+        badge.style.animationDelay = `${index * 0.08}s`;
+        badge.classList.add("badge-ready");
+    });
+}
+
+/* ========================================
    INITIALIZATION
 ======================================== */
 
@@ -462,18 +497,19 @@ document.addEventListener("DOMContentLoaded", () => {
     initLazyImages();
     initScrollReveal();
     initFormFocusEffects();
-    initKeyboardNavigation();
     initDarkMode();
     initAboutImage3DTilt();
+    initHeroBadges();
 
     updateActiveLink();
     updateNavbarShadow();
+    updateScrollProgress();
 
     window.addEventListener("scroll", handleScroll, { passive: true });
 
     console.log("Portfolio loaded successfully!");
     console.log(
-        "%cWelcome to my Portfolio!",
+        "%cWelcome to Bao Nguyen Nhan Portfolio!",
         "font-size: 20px; color: #ff5722; font-weight: bold;"
     );
 });

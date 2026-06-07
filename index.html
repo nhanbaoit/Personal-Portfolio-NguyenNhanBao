@@ -1,15 +1,24 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>Bao Nguyen Nhan | Portfolio</title>
+    <link rel="icon" type="image/svg+xml" href="public/img/favicon.svg" />
+    <meta name="description" content="Portfolio of Bao Nguyen Nhan - Aspiring Full-stack Developer focused on HTML, CSS, JavaScript, PHP, Laravel, MySQL, and testing." />
+    <meta name="author" content="Bao Nguyen Nhan" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Bao Nguyen Nhan | Full-stack Developer Portfolio" />
+    <meta property="og:description" content="Academic projects, technical stack, resume, and contact information of Bao Nguyen Nhan." />
+    <meta property="og:image" content="public/img/Portfolio.png" />
+    <meta property="og:url" content="https://nhanbaoit.github.io/Personal-Portfolio-NguyenNhanBao/" />
+    <meta property="og:type" content="website" />
 
     <!-- Google Fonts -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
 
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/05f6147c75.js" crossorigin="anonymous"></script>
@@ -20,30 +29,257 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        display: ['Space Grotesk', 'sans-serif'],
+                        sans: ["Inter", "sans-serif"],
+                        display: ["Space Grotesk", "sans-serif"],
                     },
                     colors: {
-                        primary: '#ff4d00',
-                        dark: '#0a0a0a',
-                        softOrange: '#ffd4c2',
-                    }
-                }
-            }
-        }
+                        primary: "#ff4d00",
+                        dark: "#0a0a0a",
+                        softOrange: "#ffd4c2",
+                    },
+                },
+            },
+        };
     </script>
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="public/css/styles.css">
+    <link rel="stylesheet" href="public/css/styles.css" />
+
+    <!-- Page-specific additions for improved sections -->
+    <style>
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-bottom: 34px;
+        }
+        
+        .hero-btn-primary,
+        .hero-btn-secondary {
+            min-height: 48px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 13px 24px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: 0.25s ease;
+        }
+        
+        .hero-btn-primary {
+            background: var(--dark);
+            color: var(--white);
+            border: 2px solid var(--dark);
+        }
+        
+        .hero-btn-secondary {
+            background: var(--white);
+            color: var(--dark);
+            border: 2px solid var(--dark);
+        }
+        
+        .hero-btn-primary:hover,
+        .hero-btn-secondary:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 6px 6px 0 var(--dark);
+        }
+        
+        .hero-tech-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            max-width: 620px;
+            margin-bottom: 45px;
+        }
+        
+        .hero-tech-badges span {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 2px solid rgba(10, 10, 10, 0.12);
+            background: rgba(255, 255, 255, 0.7);
+            padding: 8px 12px;
+            font-size: 0.82rem;
+            font-weight: 700;
+        }
+        
+        .skills-neo-subtitle {
+            max-width: 720px;
+            margin-top: 28px;
+            color: #444444;
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+        
+        .education-languages {
+            padding: 110px 0;
+            background: var(--white);
+        }
+        
+        .education-languages-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 34px;
+            margin-top: 45px;
+        }
+        
+        .info-card {
+            background: var(--grey-bg);
+            border: 3px solid var(--dark);
+            padding: 34px;
+            box-shadow: 8px 8px 0 var(--dark);
+        }
+        
+        .info-card h3 {
+            font-size: 1.35rem;
+            margin-bottom: 10px;
+        }
+        
+        .info-card p {
+            color: #444444;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+        
+        .info-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 14px;
+            background: var(--soft-orange);
+            border: 2px solid var(--dark);
+            padding: 8px 12px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        .language-list {
+            display: grid;
+            gap: 14px;
+            margin-top: 20px;
+        }
+        
+        .language-item {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            border-bottom: 1px solid rgba(10, 10, 10, 0.12);
+            padding-bottom: 12px;
+        }
+        
+        .language-level {
+            color: var(--primary-orange);
+            font-weight: 700;
+        }
+        
+        .contact-direct-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin-bottom: 42px;
+        }
+        
+        .contact-direct-card {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            background: var(--white);
+            color: var(--dark);
+            border-left: 5px solid var(--primary-orange);
+            padding: 18px;
+            text-decoration: none;
+            transition: 0.25s ease;
+        }
+        
+        .contact-direct-card i {
+            font-size: 1.35rem;
+            color: var(--primary-orange);
+        }
+        
+        .contact-direct-card strong {
+            font-size: 0.9rem;
+        }
+        
+        .contact-direct-card span {
+            color: #555555;
+            font-size: 0.78rem;
+            word-break: break-word;
+        }
+        
+        .contact-direct-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 6px 6px 0 var(--dark);
+        }
+        
+        body.dark-mode .hero-btn-secondary,
+        body.dark-mode .hero-tech-badges span,
+        body.dark-mode .info-card,
+        body.dark-mode .contact-direct-card {
+            background: #1e1e1e;
+            color: #ffffff;
+            border-color: #333333;
+        }
+        
+        body.dark-mode .hero-btn-primary {
+            background: #ffffff;
+            color: #121212;
+            border-color: #ffffff;
+        }
+        
+        body.dark-mode .hero-btn-primary:hover,
+        body.dark-mode .hero-btn-secondary:hover,
+        body.dark-mode .info-card {
+            box-shadow: 6px 6px 0 var(--primary-orange);
+        }
+        
+        body.dark-mode .education-languages {
+            background: #1a1a1a;
+        }
+        
+        body.dark-mode .info-card p,
+        body.dark-mode .skills-neo-subtitle,
+        body.dark-mode .contact-direct-card span {
+            color: #b0b0b0;
+        }
+        
+        body.dark-mode .language-item {
+            border-color: #333333;
+        }
+        
+        body.dark-mode .contact-direct-card:hover {
+            box-shadow: 6px 6px 0 var(--primary-orange);
+        }
+        
+        @media (max-width: 992px) {
+            .education-languages-grid,
+            .contact-direct-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero-actions {
+                align-items: stretch;
+            }
+            .hero-btn-primary,
+            .hero-btn-secondary {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 
 <body>
+    <!-- PAGE LOADER -->
     <div id="page-loader">
         <div class="loader-content">
-            <span class="loader-logo">B</span>
+            <span class="loader-logo">NB</span>
             <p>Loading Portfolio...</p>
         </div>
     </div>
@@ -61,8 +297,9 @@
                 <li><a href="#about">About Me</a></li>
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#projects">Projects</a></li>
+                <li><a href="#education">Education</a></li>
                 <li><a href="#contact" class="btn-contact">Contact Me</a></li>
-                <li class="theme-toggle" id="theme-toggle" style="cursor: pointer;" aria-label="Toggle dark mode">
+                <li class="theme-toggle" id="theme-toggle" style="cursor: pointer" aria-label="Toggle dark mode">
                     <i class="fas fa-moon"></i>
                 </li>
             </ul>
@@ -78,16 +315,33 @@
                 <div class="hero-intro">
                     <span class="line"></span>
                     <p>
-                        <span class="highlight">Aspiring Full-stack Developer</span>, focused on building
-                        practical web systems with
-                        <span class="highlight-alt">HTML, CSS, JavaScript, PHP, Laravel,</span>
-                        and MySQL.
-                    </p>
+                        <span class="highlight">Aspiring Full-stack Developer</span>, focused on building practical web applications with clean interfaces, database-driven features, and stable user flows using
+                        <span class="highlight-alt">HTML, CSS, JavaScript, PHP, Laravel, and MySQL.</span
+              >
+            </p>
+          </div>
+
+          <div class="hero-tech-badges" aria-label="Main technologies">
+            <span><i class="fa-brands fa-html5"></i> HTML</span>
+                        <span><i class="fa-brands fa-css3-alt"></i> CSS</span>
+                        <span><i class="fa-brands fa-js"></i> JavaScript</span>
+                        <span><i class="fa-brands fa-php"></i> PHP</span>
+                        <span><i class="fa-brands fa-laravel"></i> Laravel</span>
+                        <span><i class="fa-solid fa-database"></i> MySQL</span>
+                </div>
+
+                <div class="hero-actions">
+                    <a href="#projects" class="hero-btn-primary">
+                        <i class="fa-solid fa-layer-group"></i> View Projects
+                    </a>
+
+                    <a href="public/files/NguyenNhanBao_Fullstack-Intern_Resume.pdf" download="NguyenNhanBao_Fullstack-Intern_Resume.pdf" class="hero-btn-secondary">
+                        <i class="fa-solid fa-download"></i> Download Resume
+                    </a>
                 </div>
 
                 <div class="social-icons">
-                    <a href="https://www.linkedin.com/in/bao-nguyen-nhan-b64251381/" target="_blank" class="social-btn"
-                        aria-label="LinkedIn">
+                    <a href="https://www.linkedin.com/in/bao-nguyen-nhan-b64251381/" target="_blank" class="social-btn" aria-label="LinkedIn">
                         <i class="fa-brands fa-square-linkedin"></i>
                     </a>
 
@@ -108,15 +362,20 @@
 
             <div class="hero-image-wrapper">
                 <div class="image-card">
-                    <img src="public/img/about-me.jpg" alt="Nhan Bao">
+                    <img src="public/img/about-me.jpg" alt="Nhan Bao" />
                 </div>
 
                 <div class="dashed-box"></div>
 
                 <div class="doodle-arrow">
-                    <svg width="100" height="100" viewBox="0 0 100 100">
-                        <path d="M10,10 Q50,50 90,10" fill="none" stroke="black" stroke-width="1" />
-                    </svg>
+                    <svg width="100" height="100" viewBox="0 0 100 100" aria-hidden="true">
+              <path
+                d="M10,10 Q50,50 90,10"
+                fill="none"
+                stroke="black"
+                stroke-width="1"
+              />
+            </svg>
                 </div>
             </div>
         </div>
@@ -127,7 +386,7 @@
         <div class="container container-about">
             <div class="about-image about-3d-card" data-tilt>
                 <div class="about-image-inner">
-                    <img src="public/img/about-me.jpg" alt="Bao Nguyen Nhan">
+                    <img src="public/img/about-me.jpg" alt="Bao Nguyen Nhan" />
                 </div>
                 <div class="orange-bar"></div>
             </div>
@@ -140,38 +399,31 @@
 
                     <div class="desc-content">
                         <p class="main-p">
-                            Hello! I’m <span class="text-emphasis">Bao Nguyen Nhan</span>, an IT student at
-                            Thu Duc College of Technology, focusing on full-stack web development.
+                            Hello! I’m <span class="text-emphasis">Bao Nguyen Nhan</span>, an IT student at Thu Duc College of Technology, focusing on full-stack web development.
                         </p>
 
                         <p class="about-paragraph">
-                            I build practical web applications using HTML, CSS, JavaScript,
-                            PHP, Laravel, MySQL, and Git/GitHub. I enjoy creating clean user
-                            interfaces, working with database-driven features, and improving
-                            web systems through stable, user-friendly functionality.
+                            I build practical web applications using HTML, CSS, JavaScript, PHP, Laravel, MySQL, and Git/GitHub. I enjoy creating clean user interfaces, working with database-driven features, and improving web systems through stable, user-friendly functionality.
                         </p>
 
                         <p class="about-paragraph">
-                            I am currently improving my React, Next.js, testing, and English
-                            communication skills while preparing for internship opportunities
-                            in web development.
+                            I am currently improving my React, Next.js, testing, and English communication skills while preparing for internship opportunities in web development.
+                        </p>
+
+                        <p class="about-paragraph">
+                            I am looking for an internship environment where I can work with real projects, learn from experienced developers, and contribute to reliable software products.
                         </p>
 
                         <div class="about-actions">
-                            <a href="public/files/NguyenNhanBao_Fullstack-Intern_Resume.pdf"
-                                download="NguyenNhanBao_Fullstack-Intern_Resume.pdf" class="btn-download"
-                                id="cv-download-btn">
-                                <i class="fa-solid fa-download"></i>
-                                Download Resume
+                            <a href="public/files/NguyenNhanBao_Fullstack-Intern_Resume.pdf" download="NguyenNhanBao_Fullstack-Intern_Resume.pdf" class="btn-download" id="cv-download-btn">
+                                <i class="fa-solid fa-download"></i> Download Resume
                             </a>
 
-                            <a href="https://github.com/nhanbaoit" target="_blank" class="social-btn social-mini"
-                                aria-label="GitHub">
+                            <a href="https://github.com/nhanbaoit" target="_blank" class="social-btn social-mini" aria-label="GitHub">
                                 <i class="fa-brands fa-github"></i>
                             </a>
 
-                            <a href="https://www.linkedin.com/in/bao-nguyen-nhan-b64251381/" target="_blank"
-                                class="social-btn social-mini" aria-label="LinkedIn">
+                            <a href="https://www.linkedin.com/in/bao-nguyen-nhan-b64251381/" target="_blank" class="social-btn social-mini" aria-label="LinkedIn">
                                 <i class="fa-brands fa-square-linkedin"></i>
                             </a>
                         </div>
@@ -181,192 +433,124 @@
         </div>
     </section>
 
-    <!-- SKILLS / TECH STACK SECTION - TAILWIND -->
-    <section id="skills" class="tw-skills reveal-section bg-[#f5f5f5] py-28 font-sans">
-        <div class="mx-auto max-w-6xl px-5">
-            <div class="text-center">
-                <p class="mb-3 text-xs font-bold uppercase tracking-[0.28em] text-[#ff4d00]">
-                    My Technical Stack
-                </p>
+    <!-- SKILLS / TECH STACK SECTION -->
+    <section id="skills" class="skills-neo-section reveal-section">
+        <div class="skills-neo-bg"></div>
 
-                <h2 class="font-display relative inline-block text-5xl font-bold text-[#0a0a0a] md:text-6xl">
-                    Tech Stack<span class="text-[#ff4d00]">.</span>
-                    <span class="absolute -bottom-1 -right-4 -z-10 h-10 w-10 bg-[#ffd4c2]"></span>
-                </h2>
-
-                <p class="tw-skills-subtitle mx-auto mt-6 max-w-2xl text-base leading-8 text-[#666]">
-                    Technologies I use to build responsive interfaces, backend features,
-                    database-driven systems, and stable web applications.
-                </p>
-            </div>
-
-            <!-- Main skill groups -->
-            <div class="mt-16 grid gap-7 lg:grid-cols-3">
-                <div
-                    class="tw-skill-card reveal-item group border-2 border-[#0a0a0a] bg-white p-9 transition-all duration-300 hover:-translate-x-1.5 hover:-translate-y-1.5 hover:shadow-[10px_10px_0_#0a0a0a]">
-                    <div class="mb-8 flex items-center justify-between">
-                        <div class="flex h-14 w-14 items-center justify-center bg-[#0a0a0a] text-xl text-[#ff4d00]">
-                            <i class="fa-solid fa-server"></i>
-                        </div>
-                        <span class="font-display text-5xl font-bold text-black/10">01</span>
-                    </div>
-
-                    <h3 class="font-display mb-5 text-2xl font-bold text-[#0a0a0a]">
-                        Backend Development
-                    </h3>
-
-                    <p class="leading-8 text-[#444]">
-                        Building web application features with
-                        <strong>PHP</strong>, <strong>Laravel</strong>, database queries,
-                        CRUD flows, authentication, and practical e-commerce logic.
-                    </p>
-
-                    <div class="mt-7 flex flex-wrap gap-2">
-                        <span
-                            class="rounded-full border border-black/10 bg-[#f1f1f1] px-3 py-1 text-xs font-semibold">PHP</span>
-                        <span
-                            class="rounded-full border border-black/10 bg-[#f1f1f1] px-3 py-1 text-xs font-semibold">Laravel</span>
-                        <span
-                            class="rounded-full border border-black/10 bg-[#f1f1f1] px-3 py-1 text-xs font-semibold">MySQL</span>
-                        <span
-                            class="rounded-full border border-black/10 bg-[#f1f1f1] px-3 py-1 text-xs font-semibold">SQL</span>
-                    </div>
-                </div>
-
-                <div
-                    class="tw-skill-card reveal-item group border-2 border-[#0a0a0a] bg-white p-9 transition-all duration-300 hover:-translate-x-1.5 hover:-translate-y-1.5 hover:shadow-[10px_10px_0_#0a0a0a]">
-                    <div class="mb-8 flex items-center justify-between">
-                        <div class="flex h-14 w-14 items-center justify-center bg-[#0a0a0a] text-xl text-[#ff4d00]">
-                            <i class="fa-solid fa-laptop-code"></i>
-                        </div>
-                        <span class="font-display text-5xl font-bold text-black/10">02</span>
-                    </div>
-
-                    <h3 class="font-display mb-5 text-2xl font-bold text-[#0a0a0a]">
-                        Frontend Development
-                    </h3>
-
-                    <p class="leading-8 text-[#444]">
-                        Creating clean, responsive, and user-friendly interfaces using
-                        <strong>HTML</strong>, <strong>CSS</strong>, <strong>JavaScript</strong>,
-                        and improving with <strong>React</strong> / <strong>Next.js</strong>.
-                    </p>
-
-                    <div class="mt-7 flex flex-wrap gap-2">
-                        <span
-                            class="rounded-full border border-black/10 bg-[#f1f1f1] px-3 py-1 text-xs font-semibold">HTML</span>
-                        <span
-                            class="rounded-full border border-black/10 bg-[#f1f1f1] px-3 py-1 text-xs font-semibold">CSS</span>
-                        <span
-                            class="rounded-full border border-black/10 bg-[#f1f1f1] px-3 py-1 text-xs font-semibold">JavaScript</span>
-                        <span
-                            class="rounded-full border border-black/10 bg-[#f1f1f1] px-3 py-1 text-xs font-semibold">React</span>
-                        <span
-                            class="rounded-full border border-black/10 bg-[#f1f1f1] px-3 py-1 text-xs font-semibold">Next.js</span>
-                    </div>
-                </div>
-
-                <div
-                    class="tw-skill-card reveal-item group border-2 border-[#0a0a0a] bg-white p-9 transition-all duration-300 hover:-translate-x-1.5 hover:-translate-y-1.5 hover:shadow-[10px_10px_0_#0a0a0a]">
-                    <div class="mb-8 flex items-center justify-between">
-                        <div class="flex h-14 w-14 items-center justify-center bg-[#0a0a0a] text-xl text-[#ff4d00]">
-                            <i class="fa-solid fa-code-branch"></i>
-                        </div>
-                        <span class="font-display text-5xl font-bold text-black/10">03</span>
-                    </div>
-
-                    <h3 class="font-display mb-5 text-2xl font-bold text-[#0a0a0a]">
-                        Tools & QA
-                    </h3>
-
-                    <p class="leading-8 text-[#444]">
-                        Using <strong>Git/GitHub</strong> for version control,
-                        <strong>Postman</strong> for API checking, and manual testing
-                        to validate user flows and improve feature stability.
-                    </p>
-
-                    <div class="mt-7 flex flex-wrap gap-2">
-                        <span
-                            class="rounded-full border border-black/10 bg-[#f1f1f1] px-3 py-1 text-xs font-semibold">Git</span>
-                        <span
-                            class="rounded-full border border-black/10 bg-[#f1f1f1] px-3 py-1 text-xs font-semibold">GitHub</span>
-                        <span
-                            class="rounded-full border border-black/10 bg-[#f1f1f1] px-3 py-1 text-xs font-semibold">Postman</span>
-                        <span
-                            class="rounded-full border border-black/10 bg-[#f1f1f1] px-3 py-1 text-xs font-semibold">Docker</span>
-                        <span
-                            class="rounded-full border border-black/10 bg-[#f1f1f1] px-3 py-1 text-xs font-semibold">Manual
-                            Testing</span>
-                    </div>
+        <div class="skills-neo-container">
+            <div class="skills-neo-heading">
+                <div class="skills-neo-label">
+                    <h2>SKILLS</h2>
                 </div>
             </div>
 
-            <!-- Tech stack icons -->
-            <div class="mt-16 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8">
-                <div
-                    class="tw-tech-card group flex min-h-28 flex-col items-center justify-center gap-3 border border-black/10 bg-white transition-all duration-300 hover:-translate-y-2 hover:border-[#0a0a0a] hover:shadow-[6px_6px_0_#0a0a0a]">
-                    <i class="fa-brands fa-html5 text-3xl text-[#0a0a0a] group-hover:text-[#ff4d00]"></i><span
-                        class="text-sm font-semibold">HTML</span></div>
-                <div
-                    class="tw-tech-card group flex min-h-28 flex-col items-center justify-center gap-3 border border-black/10 bg-white transition-all duration-300 hover:-translate-y-2 hover:border-[#0a0a0a] hover:shadow-[6px_6px_0_#0a0a0a]">
-                    <i class="fa-brands fa-css3-alt text-3xl text-[#0a0a0a] group-hover:text-[#ff4d00]"></i><span
-                        class="text-sm font-semibold">CSS</span></div>
-                <div
-                    class="tw-tech-card group flex min-h-28 flex-col items-center justify-center gap-3 border border-black/10 bg-white transition-all duration-300 hover:-translate-y-2 hover:border-[#0a0a0a] hover:shadow-[6px_6px_0_#0a0a0a]">
-                    <i class="fa-brands fa-js text-3xl text-[#0a0a0a] group-hover:text-[#ff4d00]"></i><span
-                        class="text-sm font-semibold">JavaScript</span></div>
-                <div
-                    class="tw-tech-card group flex min-h-28 flex-col items-center justify-center gap-3 border border-black/10 bg-white transition-all duration-300 hover:-translate-y-2 hover:border-[#0a0a0a] hover:shadow-[6px_6px_0_#0a0a0a]">
-                    <i class="fa-brands fa-react text-3xl text-[#0a0a0a] group-hover:text-[#ff4d00]"></i><span
-                        class="text-sm font-semibold">React</span></div>
-                <div
-                    class="tw-tech-card group flex min-h-28 flex-col items-center justify-center gap-3 border border-black/10 bg-white transition-all duration-300 hover:-translate-y-2 hover:border-[#0a0a0a] hover:shadow-[6px_6px_0_#0a0a0a]">
-                    <i class="fa-solid fa-n text-3xl text-[#0a0a0a] group-hover:text-[#ff4d00]"></i><span
-                        class="text-sm font-semibold">Next.js</span></div>
-                <div
-                    class="tw-tech-card group flex min-h-28 flex-col items-center justify-center gap-3 border border-black/10 bg-white transition-all duration-300 hover:-translate-y-2 hover:border-[#0a0a0a] hover:shadow-[6px_6px_0_#0a0a0a]">
-                    <i class="fa-brands fa-php text-3xl text-[#0a0a0a] group-hover:text-[#ff4d00]"></i><span
-                        class="text-sm font-semibold">PHP</span></div>
-                <div
-                    class="tw-tech-card group flex min-h-28 flex-col items-center justify-center gap-3 border border-black/10 bg-white transition-all duration-300 hover:-translate-y-2 hover:border-[#0a0a0a] hover:shadow-[6px_6px_0_#0a0a0a]">
-                    <i class="fa-brands fa-laravel text-3xl text-[#0a0a0a] group-hover:text-[#ff4d00]"></i><span
-                        class="text-sm font-semibold">Laravel</span></div>
-                <div
-                    class="tw-tech-card group flex min-h-28 flex-col items-center justify-center gap-3 border border-black/10 bg-white transition-all duration-300 hover:-translate-y-2 hover:border-[#0a0a0a] hover:shadow-[6px_6px_0_#0a0a0a]">
-                    <i class="fa-solid fa-database text-3xl text-[#0a0a0a] group-hover:text-[#ff4d00]"></i><span
-                        class="text-sm font-semibold">MySQL</span></div>
-                <div
-                    class="tw-tech-card group flex min-h-28 flex-col items-center justify-center gap-3 border border-black/10 bg-white transition-all duration-300 hover:-translate-y-2 hover:border-[#0a0a0a] hover:shadow-[6px_6px_0_#0a0a0a]">
-                    <i class="fa-solid fa-table text-3xl text-[#0a0a0a] group-hover:text-[#ff4d00]"></i><span
-                        class="text-sm font-semibold">SQL</span></div>
-                <div
-                    class="tw-tech-card group flex min-h-28 flex-col items-center justify-center gap-3 border border-black/10 bg-white transition-all duration-300 hover:-translate-y-2 hover:border-[#0a0a0a] hover:shadow-[6px_6px_0_#0a0a0a]">
-                    <i class="fa-brands fa-git-alt text-3xl text-[#0a0a0a] group-hover:text-[#ff4d00]"></i><span
-                        class="text-sm font-semibold">Git</span></div>
-                <div
-                    class="tw-tech-card group flex min-h-28 flex-col items-center justify-center gap-3 border border-black/10 bg-white transition-all duration-300 hover:-translate-y-2 hover:border-[#0a0a0a] hover:shadow-[6px_6px_0_#0a0a0a]">
-                    <i class="fa-brands fa-github text-3xl text-[#0a0a0a] group-hover:text-[#ff4d00]"></i><span
-                        class="text-sm font-semibold">GitHub</span></div>
-                <div
-                    class="tw-tech-card group flex min-h-28 flex-col items-center justify-center gap-3 border border-black/10 bg-white transition-all duration-300 hover:-translate-y-2 hover:border-[#0a0a0a] hover:shadow-[6px_6px_0_#0a0a0a]">
-                    <i class="fa-solid fa-paper-plane text-3xl text-[#0a0a0a] group-hover:text-[#ff4d00]"></i><span
-                        class="text-sm font-semibold">Postman</span></div>
-                <div
-                    class="tw-tech-card group flex min-h-28 flex-col items-center justify-center gap-3 border border-black/10 bg-white transition-all duration-300 hover:-translate-y-2 hover:border-[#0a0a0a] hover:shadow-[6px_6px_0_#0a0a0a]">
-                    <i class="fa-brands fa-docker text-3xl text-[#0a0a0a] group-hover:text-[#ff4d00]"></i><span
-                        class="text-sm font-semibold">Docker</span></div>
-                <div
-                    class="tw-tech-card group flex min-h-28 flex-col items-center justify-center gap-3 border border-black/10 bg-white transition-all duration-300 hover:-translate-y-2 hover:border-[#0a0a0a] hover:shadow-[6px_6px_0_#0a0a0a]">
-                    <i class="fa-brands fa-java text-3xl text-[#0a0a0a] group-hover:text-[#ff4d00]"></i><span
-                        class="text-sm font-semibold">Java</span></div>
-                <div
-                    class="tw-tech-card group flex min-h-28 flex-col items-center justify-center gap-3 border border-black/10 bg-white transition-all duration-300 hover:-translate-y-2 hover:border-[#0a0a0a] hover:shadow-[6px_6px_0_#0a0a0a]">
-                    <i class="fa-solid fa-code text-3xl text-[#0a0a0a] group-hover:text-[#ff4d00]"></i><span
-                        class="text-sm font-semibold">C#</span></div>
-                <div
-                    class="tw-tech-card group flex min-h-28 flex-col items-center justify-center gap-3 border border-black/10 bg-white transition-all duration-300 hover:-translate-y-2 hover:border-[#0a0a0a] hover:shadow-[6px_6px_0_#0a0a0a]">
-                    <i class="fa-solid fa-bug text-3xl text-[#0a0a0a] group-hover:text-[#ff4d00]"></i><span
-                        class="text-sm font-semibold">Manual Testing</span></div>
+            <div class="skills-neo-grid">
+                <!-- Frontend -->
+                <div class="skills-neo-card reveal-item">
+                    <div class="skills-card-accent accent-cyan"></div>
+
+                    <div class="skills-neo-card-header">
+                        <i class="fa-brands fa-react skill-main-icon icon-cyan"></i>
+                        <h3>Frontend</h3>
+                    </div>
+
+                    <div class="skills-card-line"></div>
+
+                    <div class="skills-tags">
+                        <span class="skill-tag"><i class="fa-brands fa-html5"></i> HTML</span
+              >
+              <span class="skill-tag"
+                ><i class="fa-brands fa-css3-alt"></i> CSS</span
+              >
+              <span class="skill-tag"
+                ><i class="fa-brands fa-js"></i> JavaScript</span
+              >
+              <span class="skill-tag"
+                ><i class="fa-brands fa-react"></i> React</span
+              >
+              <span class="skill-tag"
+                ><i class="fa-solid fa-n"></i> Next.js</span
+              >
+              <span class="skill-tag"
+                ><i class="fa-brands fa-bootstrap"></i> Bootstrap</span
+              >
+              <span class="skill-tag"
+                ><i class="fa-solid fa-mobile-screen-button"></i> Responsive
+                UI</span
+              >
+            </div>
+          </div>
+
+          <!-- Backend & Database -->
+          <div class="skills-neo-card reveal-item">
+            <div class="skills-card-accent accent-yellow"></div>
+
+            <div class="skills-neo-card-header">
+              <i class="fa-solid fa-code skill-main-icon icon-yellow"></i>
+              <h3>Backend & Database</h3>
+            </div>
+
+            <div class="skills-card-line"></div>
+
+            <div class="skills-tags">
+              <span class="skill-tag"
+                ><i class="fa-brands fa-php"></i> PHP</span
+              >
+              <span class="skill-tag"
+                ><i class="fa-brands fa-laravel"></i> Laravel</span
+              >
+              <span class="skill-tag"
+                ><i class="fa-solid fa-database"></i> MySQL</span
+              >
+              <span class="skill-tag"
+                ><i class="fa-solid fa-table"></i> SQL</span
+              >
+              <span class="skill-tag"
+                ><i class="fa-solid fa-server"></i> CRUD</span
+              >
+              <span class="skill-tag"
+                ><i class="fa-solid fa-shield-halved"></i> Authentication</span
+              >
+              <span class="skill-tag"
+                ><i class="fa-solid fa-cart-shopping"></i> E-commerce
+                Logic</span
+              >
+            </div>
+          </div>
+
+          <!-- Tools & QA -->
+          <div class="skills-neo-card reveal-item">
+            <div class="skills-card-accent accent-pink"></div>
+
+            <div class="skills-neo-card-header">
+              <i class="fa-solid fa-code-branch skill-main-icon icon-pink"></i>
+              <h3>Tools & QA</h3>
+            </div>
+
+            <div class="skills-card-line"></div>
+
+            <div class="skills-tags">
+              <span class="skill-tag"
+                ><i class="fa-brands fa-git-alt"></i> Git</span
+              >
+              <span class="skill-tag"
+                ><i class="fa-brands fa-github"></i> GitHub</span
+              >
+              <span class="skill-tag"
+                ><i class="fa-solid fa-paper-plane"></i> Postman</span
+              >
+              <span class="skill-tag"
+                ><i class="fa-brands fa-docker"></i> Docker</span
+              >
+              <span class="skill-tag"
+                ><i class="fa-solid fa-bug"></i> Manual Testing</span
+              >
+              <span class="skill-tag"
+                ><i class="fa-brands fa-java"></i> Java</span
+              >
+              <span class="skill-tag"><i class="fa-solid fa-code"></i> C#</span>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -379,111 +563,180 @@
             </div>
 
             <div class="projects-grid">
+                <!-- Project 1 -->
                 <div class="project-card reveal-item">
                     <div class="project-img">
-                        <img src="public/img/project-btris.png" alt="TechStore B-TRIS Project">
+                        <img src="public/img/project-btris.png" alt="B-TRIS TechStore E-commerce System" />
                         <div class="project-overlay">
                             <i class="fa-solid fa-external-link-alt"></i>
                         </div>
                     </div>
 
                     <div class="project-info">
-                        <h3>
-                            B-TRIS TechStore E-commerce System
-                            <span class="project-status">- In Development</span>
-                        </h3>
+                        <div class="project-header">
+                            <h3>B-TRIS TechStore E-commerce System</h3>
+                            <span class="project-badge">In Development</span>
+                        </div>
 
-                        <div class="project-skills">
-                            <span class="skill-line"></span>
-                            Skills: HTML, CSS, JS, PHP (Laravel), MySQL
+                        <p class="project-role">Role: Backend & Database Support</p>
+
+                        <div class="project-tags">
+                            <span>Laravel</span>
+                            <span>PHP</span>
+                            <span>MySQL</span>
+                            <span>JavaScript</span>
+                            <span>HTML/CSS</span>
                         </div>
 
                         <p>
-                            A dynamic e-commerce web application developed collaboratively by a 4-member team.
-                            Built with the Laravel framework, it features a responsive shopping interface,
-                            secure user authentication, product management, and continuous live server deployment.
+                            A Laravel-based e-commerce system developed by a 4-member team. My contribution focused on backend features, database-driven pages, shopping cart logic, product management, and testing user flows.
                         </p>
+
+                        <ul class="project-features">
+                            <li>Product listing and product detail pages</li>
+                            <li>Shopping cart logic and user flow testing</li>
+                            <li>Database-driven product and order management</li>
+                        </ul>
 
                         <div class="project-links">
                             <a href="https://github.com/ngnhanbao/DOAN_BE2_NhomI.git" target="_blank">
-                                <i class="fa-brands fa-github"></i>
-                                Github
+                                <i class="fa-brands fa-github"></i> GitHub
                             </a>
                         </div>
                     </div>
                 </div>
 
+                <!-- Project 2 -->
                 <div class="project-card reveal-item">
                     <div class="project-img">
-                        <img src="public/img/Techstore.png" alt="TechStore BTD E-commerce Web Application">
+                        <img src="public/img/Techstore.png" alt="TechStore BTD E-commerce Web Application" />
                         <div class="project-overlay">
                             <i class="fa-solid fa-external-link-alt"></i>
                         </div>
                     </div>
 
                     <div class="project-info">
-                        <h3>
-                            TechStore (BTD) E-commerce Web Application
-                            <span class="project-status">- In Development</span>
-                        </h3>
+                        <div class="project-header">
+                            <h3>TechStore BTD E-commerce Web Application</h3>
+                            <span class="project-badge">In Development</span>
+                        </div>
 
-                        <div class="project-skills">
-                            <span class="skill-line"></span>
-                            Skills: HTML, CSS, JavaScript, PHP, MySQL
+                        <p class="project-role">Role: Full-stack Practice Project</p>
+
+                        <div class="project-tags">
+                            <span>PHP</span>
+                            <span>MySQL</span>
+                            <span>JavaScript</span>
+                            <span>HTML</span>
+                            <span>CSS</span>
                         </div>
 
                         <p>
-                            A dynamic e-commerce web application tailored for tech retail.
-                            This project is currently under active development, focusing on building
-                            a responsive user interface and efficient database management.
+                            A tech retail web application built to practice full-stack web development. The project focuses on responsive UI, product display, database management, and basic e-commerce workflows.
                         </p>
 
+                        <ul class="project-features">
+                            <li>Responsive product interface</li>
+                            <li>Product data management with MySQL</li>
+                            <li>Live demo deployment for portfolio showcase</li>
+                        </ul>
+
                         <div class="project-links">
-                            <a href="#">
-                                <i class="fa-brands fa-github"></i>
-                                Github
+                            <a href="#" aria-label="GitHub link not added yet">
+                                <i class="fa-brands fa-github"></i> GitHub
                             </a>
 
                             <a href="https://technology-store.infinityfree.me/" target="_blank">
-                                <i class="fa-brands fa-chrome"></i>
-                                Live Demo
+                                <i class="fa-brands fa-chrome"></i> Live Demo
                             </a>
                         </div>
                     </div>
                 </div>
 
+                <!-- Project 3 -->
                 <div class="project-card reveal-item">
                     <div class="project-img">
-                        <img src="public/img/Portfolio.png" alt="Personal Portfolio Website">
+                        <img src="public/img/Portfolio.png" alt="Personal Portfolio Website" />
                         <div class="project-overlay">
                             <i class="fa-solid fa-external-link-alt"></i>
                         </div>
                     </div>
 
                     <div class="project-info">
-                        <h3>Personal Portfolio Website</h3>
+                        <div class="project-header">
+                            <h3>Personal Portfolio Website</h3>
+                            <span class="project-badge completed">Completed</span>
+                        </div>
 
-                        <div class="project-skills">
-                            <span class="skill-line"></span>
-                            Skills: HTML, CSS, JavaScript
+                        <p class="project-role">Role: Frontend Developer</p>
+
+                        <div class="project-tags">
+                            <span>HTML</span>
+                            <span>CSS</span>
+                            <span>JavaScript</span>
+                            <span>Responsive Design</span>
                         </div>
 
                         <p>
-                            A fully responsive and custom-designed portfolio built from scratch.
-                            It serves as an interactive digital resume to showcase my technical
-                            capabilities, academic projects, and professional journey.
+                            A personal portfolio website designed to showcase my technical skills, academic projects, resume, and contact information with a responsive and interactive user interface.
                         </p>
+
+                        <ul class="project-features">
+                            <li>Responsive layout for desktop and mobile</li>
+                            <li>Dark mode, page loader, and scroll reveal effects</li>
+                            <li>Project showcase and contact form integration</li>
+                        </ul>
 
                         <div class="project-links">
                             <a href="https://github.com/nhanbaoit/Personal-Portfolio-NguyenNhanBao" target="_blank">
-                                <i class="fa-brands fa-github"></i>
-                                Github
+                                <i class="fa-brands fa-github"></i> GitHub
                             </a>
 
                             <a href="https://nhanbaoit.github.io/Personal-Portfolio-NguyenNhanBao/" target="_blank">
-                                <i class="fa-brands fa-chrome"></i>
-                                Live Demo
+                                <i class="fa-brands fa-chrome"></i> Live Demo
                             </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EDUCATION & LANGUAGES SECTION -->
+    <section class="education-languages reveal-section" id="education">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-title">Education & Languages.</h2>
+            </div>
+
+            <div class="education-languages-grid">
+                <div class="info-card reveal-item">
+                    <h3>Thu Duc College of Technology</h3>
+                    <p><strong>Major:</strong> Information Technology</p>
+                    <p>
+                        I am building a foundation in web development, databases, object-oriented programming, data structures, and practical software development through academic projects.
+                    </p>
+                    <span class="info-badge">
+              <i class="fa-solid fa-graduation-cap"></i>
+              Expected completion: 2027
+            </span>
+                </div>
+
+                <div class="info-card reveal-item">
+                    <h3>Languages</h3>
+                    <p>
+                        I am improving my English communication skills to prepare for internship interviews, documentation reading, and teamwork in software projects.
+                    </p>
+
+                    <div class="language-list">
+                        <div class="language-item">
+                            <span>Vietnamese</span>
+                            <span class="language-level">Native</span>
+                        </div>
+
+                        <div class="language-item">
+                            <span>English</span>
+                            <span class="language-level">Pre-Intermediate / Improving</span>
                         </div>
                     </div>
                 </div>
@@ -498,34 +751,34 @@
                 <h2 class="section-title">Contact Me.</h2>
 
                 <p class="contact-intro">
-                    I am open to internship opportunities, frontend roles, and web development projects.
-                    Feel free to send me a message and I will get back to you soon.
+                    I am open to internship opportunities, frontend roles, backend practice projects, and web development collaborations.
                 </p>
+
+                <div class="contact-direct-grid">
+                    <a href="mailto:nhanbao.0410@gmail.com" class="contact-direct-card">
+                        <i class="fa-solid fa-envelope"></i>
+                        <strong>Email</strong>
+                        <span>nhanbao.0410@gmail.com</span>
+                    </a>
+
+                    <a href="https://github.com/nhanbaoit" target="_blank" class="contact-direct-card">
+                        <i class="fa-brands fa-github"></i>
+                        <strong>GitHub</strong>
+                        <span>github.com/nhanbaoit</span>
+                    </a>
+
+                    <a href="https://www.linkedin.com/in/bao-nguyen-nhan-b64251381/" target="_blank" class="contact-direct-card">
+                        <i class="fa-brands fa-linkedin"></i>
+                        <strong>LinkedIn</strong>
+                        <span>Bao Nguyen Nhan</span>
+                    </a>
+                </div>
 
                 <div class="contact-note">
                     <p>
-                        Please include your <strong>Name</strong>, <strong>Email Address</strong>,
-                        and a short message so I can reply properly.
+                        Please include your <strong>Name</strong>,
+                        <strong>Email Address</strong>, and a short message so I can reply properly.
                     </p>
-                </div>
-
-                <div class="contact-social-section">
-                    <p class="social-label">Write me on my social networks</p>
-
-                    <div class="social-btns">
-                        <a href="mailto:nhanbao.0410@gmail.com" aria-label="Email">
-                            <i class="fa-solid fa-envelope"></i>
-                        </a>
-
-                        <a href="https://github.com/nhanbaoit" target="_blank" aria-label="GitHub">
-                            <i class="fa-brands fa-github"></i>
-                        </a>
-
-                        <a href="https://www.linkedin.com/in/bao-nguyen-nhan-b64251381/" target="_blank"
-                            aria-label="LinkedIn">
-                            <i class="fa-brands fa-linkedin"></i>
-                        </a>
-                    </div>
                 </div>
             </div>
 
@@ -535,30 +788,30 @@
                 <form id="contactForm" action="https://formspree.io/f/mykonldj" method="POST">
                     <div class="form-row">
                         <div class="form-group">
-                            <label>First Name</label>
-                            <input type="text" name="firstName" placeholder="e.g. John" required>
+                            <label for="firstName">First Name</label>
+                            <input id="firstName" type="text" name="firstName" placeholder="e.g. John" required />
                         </div>
 
                         <div class="form-group">
-                            <label>Email Address</label>
-                            <input type="email" name="email" placeholder="e.g. john@example.com" required>
+                            <label for="email">Email Address</label>
+                            <input id="email" type="email" name="email" placeholder="e.g. john@example.com" required />
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label>Subject</label>
-                        <input type="text" name="subject" placeholder="Enquiry" required>
+                        <label for="subject">Subject</label>
+                        <input id="subject" type="text" name="subject" placeholder="Enquiry" required />
                     </div>
 
                     <div class="form-group">
-                        <label>Message</label>
-                        <textarea name="message" rows="5" placeholder="Write your message here..." required></textarea>
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" placeholder="Write your message here..." required></textarea>
                     </div>
 
                     <button type="submit" class="btn-send">
-                        <i class="fa-solid fa-paper-plane"></i>
-                        Send Message
-                    </button>
+              <i class="fa-solid fa-paper-plane"></i>
+              Send Message
+            </button>
                 </form>
             </div>
         </div>
@@ -568,7 +821,7 @@
     <footer class="footer">
         <div class="container footer-container">
             <p class="copyright">
-                &copy; All right reserved by <strong>Bao Nguyen Nhan</strong>
+                &copy; All rights reserved by <strong>Bao Nguyen Nhan</strong>
             </p>
 
             <div class="footer-right">
@@ -576,9 +829,10 @@
                     <a href="#about">About</a>
                     <a href="#skills">Skills</a>
                     <a href="#projects">Projects</a>
+                    <a href="#education">Education</a>
                 </div>
 
-                <a href="#home" class="scroll-top">
+                <a href="#home" class="scroll-top" aria-label="Scroll to top">
                     <i class="fa-solid fa-arrow-up"></i>
                 </a>
             </div>
@@ -587,7 +841,6 @@
 
     <!-- CUSTOM JS -->
     <script src="public/js/main.js"></script>
-    <!-- <script src="public/js/scrollreveal.min.js"></script> -->
 </body>
 
 </html>
