@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-import ThreeHeroScene from './ThreeHeroScene';
+import React from 'react';
+import ThreeJsLogo from './ThreeJsLogo';
 
 export default function Hero({ onDownloadResume, isDarkMode }) {
-  const [heroView, setHeroView] = useState('photo'); // 'photo' | 'three'
 
   const scrollTo = (id) => {
     const el = document.getElementById(id);
@@ -60,7 +59,7 @@ export default function Hero({ onDownloadResume, isDarkMode }) {
               <i className="fa-brands fa-tailwind-css"></i> TailwindCSS
             </span>
             <span>
-              <i className="fa-solid fa-cube" style={{ color: '#ff4d00' }}></i> Three.js
+              <ThreeJsLogo size={16} color="#ff4d00" /> Three.js
             </span>
           </div>
 
@@ -125,91 +124,44 @@ export default function Hero({ onDownloadResume, isDarkMode }) {
         </div>
 
         <div className="hero-image-wrapper">
-          {/* Neobrutalist View Mode Switcher */}
+          {/* Neobrutalist Photo Badge */}
           <div
             className="hero-view-toggle"
             style={{
               position: 'absolute',
-              top: '-50px',
+              top: '-48px',
               right: '0',
               display: 'inline-flex',
-              background: isDarkMode ? '#1e1e1e' : '#ffffff',
+              alignItems: 'center',
+              gap: '6px',
+              background: '#ff4d00',
+              color: '#ffffff',
               border: `2px solid ${isDarkMode ? '#333333' : '#0a0a0a'}`,
               boxShadow: isDarkMode ? '4px 4px 0 #ff4d00' : '4px 4px 0 #0a0a0a',
               zIndex: 10,
-              padding: '3px',
-              gap: '4px',
+              padding: '6px 16px',
+              fontWeight: 700,
+              fontSize: '0.82rem',
+              lineHeight: 1,
             }}
           >
-            <button
-              onClick={() => setHeroView('photo')}
-              style={{
-                background: heroView === 'photo' ? '#ff4d00' : 'transparent',
-                color: heroView === 'photo' ? '#ffffff' : 'inherit',
-                border: 'none',
-                padding: '6px 14px',
-                fontWeight: 700,
-                fontSize: '0.82rem',
-                cursor: 'pointer',
-                transition: '0.2s ease',
-              }}
-            >
-              <i className="fa-solid fa-user" style={{ marginRight: '6px' }}></i> Photo
-            </button>
-            <button
-              onClick={() => setHeroView('three')}
-              style={{
-                background: heroView === 'three' ? '#ff4d00' : 'transparent',
-                color: heroView === 'three' ? '#ffffff' : 'inherit',
-                border: 'none',
-                padding: '6px 14px',
-                fontWeight: 700,
-                fontSize: '0.82rem',
-                cursor: 'pointer',
-                transition: '0.2s ease',
-              }}
-            >
-              <i className="fa-solid fa-cube" style={{ marginRight: '6px' }}></i> 3D Three.js
-            </button>
+            <i className="fa-solid fa-user"></i> Photo
           </div>
 
-          {heroView === 'photo' ? (
-            <>
-              <div className="image-card">
-                <img src="/img/about-me.jpg" alt="Nhan Bao" />
-              </div>
-              <div className="dashed-box"></div>
-              <div className="doodle-arrow">
-                <svg width="100" height="100" viewBox="0 0 100 100" aria-hidden="true">
-                  <path
-                    d="M10,10 Q50,50 90,10"
-                    fill="none"
-                    stroke={isDarkMode ? '#ffd4c2' : 'black'}
-                    strokeWidth="1.5"
-                  />
-                </svg>
-              </div>
-            </>
-          ) : (
-            <div
-              className="three-card-container"
-              style={{
-                width: '380px',
-                height: '420px',
-                maxWidth: '100%',
-                background: isDarkMode ? '#1a1a1a' : '#fcfcfc',
-                border: `3px solid ${isDarkMode ? '#444444' : '#0a0a0a'}`,
-                boxShadow: isDarkMode ? '8px 8px 0 #ff4d00' : '8px 8px 0 #0a0a0a',
-                position: 'relative',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                overflow: 'hidden',
-              }}
-            >
-              <ThreeHeroScene isDarkMode={isDarkMode} />
-            </div>
-          )}
+          <div className="image-card">
+            <img src="/img/about-me.jpg" alt="Nhan Bao" />
+          </div>
+          <div className="dashed-box"></div>
+          <div className="doodle-arrow">
+            <svg width="100" height="100" viewBox="0 0 100 100" aria-hidden="true">
+              <path
+                d="M10,10 Q50,50 90,10"
+                fill="none"
+                stroke={isDarkMode ? '#ffd4c2' : 'black'}
+                strokeWidth="1.5"
+              />
+            </svg>
+          </div>
         </div>
       </div>
     </section>

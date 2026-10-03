@@ -1,4 +1,5 @@
 import React from 'react';
+import ThreeJsLogo from './ThreeJsLogo';
 
 export default function Skills() {
   return (
@@ -38,7 +39,7 @@ export default function Skills() {
                 <i className="fa-brands fa-react"></i> React
               </span>
               <span className="skill-tag">
-                <i className="fa-solid fa-cube"></i> Three.js
+                <ThreeJsLogo size={14} style={{ marginRight: '6px' }} /> Three.js
               </span>
               <span className="skill-tag">
                 <i className="fa-brands fa-bootstrap"></i> Bootstrap

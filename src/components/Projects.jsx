@@ -26,7 +26,7 @@ export default function Projects() {
     <section className="projects reveal-section is-visible" id="projects">
       <div className="container">
         <div className="text-center">
-          <h2 className="section-title">Academic Projects.</h2>
+          <h2 className="section-title">Projects.</h2>
         </div>
 
         <div

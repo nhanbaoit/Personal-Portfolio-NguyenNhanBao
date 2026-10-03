@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
+import ThreeJsLogo from './ThreeJsLogo';
 
 export default function ThreeHeroScene({ isDarkMode }) {
   const containerRef = useRef(null);
@@ -357,6 +358,7 @@ export default function ThreeHeroScene({ isDarkMode }) {
             animation: 'pulse 1.5s infinite',
           }}
         />
+        <ThreeJsLogo size={14} color="#ff4d00" />
         {isInteracting ? '3D Active • Drag to Rotate' : 'Three.js 3D • Interactive'}
       </div>
     </div>
